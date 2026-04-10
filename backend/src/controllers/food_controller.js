@@ -7,7 +7,7 @@ const foodItemCreate = async (req,res)=>{
     console.log(req.foodPartner)
     // console.log(req.body)
     // console.log(req.file);
-    const result = await foodVideoUpload(req.file.buffer.toString('base64'),itemName+"-"+uuid())
+    const result = await foodVideoUpload(req.file.buffer.toString('base64'),itemName+"-"+uuid()+req.foodPartner._id)
     // console.log('result of upload\n',result)
     const foodItem = await foodModel.create({
         itemName: itemName,
@@ -20,4 +20,13 @@ const foodItemCreate = async (req,res)=>{
     
 }
 
-module.exports = {foodItemCreate}
+const getFoodList = async (req,res)=>{
+    const response = await foodModel.find({})
+    const allFoodList=[]
+    response.map((item)=>{
+        allFoodList.push(item)
+    })
+    console.log(allFoodList)
+    res.status(200).json({list:allFoodList})
+}
+module.exports = {foodItemCreate,getFoodList}

@@ -1,9 +1,9 @@
 import React from 'react';
 import './AuthPage.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AuthPage({ title, subtitle, buttonLabel, fields, linkText, linkTo, switchLink, submitHandler }) {
-
   return (
     <main className="auth-shell" aria-label={title}>
       <section className="auth-card">
@@ -43,14 +43,17 @@ function AuthPage({ title, subtitle, buttonLabel, fields, linkText, linkTo, swit
 }
 
 export function UserSignup() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value
     const phoneNumber = e.target.phone.value
     const fullName = e.target.fullName.value
     const password = e.target.password.value
 
-    axios.post('http://localhost:3000/auth/user/signup', { email, phoneNumber, fullName, password })
+    const response = await axios.post('http://localhost:3000/auth/user/signup', { email, phoneNumber, fullName, password },{withCredentials: true})
+    console.log(response.data);
+    navigate('/');
   }
   return (
     <AuthPage
@@ -72,12 +75,14 @@ export function UserSignup() {
 }
 
 export function UserSignin() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const email = e.target.email.value
     const password = e.target.password.value
-
-    axios.post('http://localhost:3000/auth/user/signin', { email, password })
+    const response = await axios.post('http://localhost:3000/auth/user/signin', { email, password },{withCredentials: true})
+    console.log(response.data);
+    navigate('/');
   }
   return (
     <AuthPage
@@ -97,6 +102,7 @@ export function UserSignin() {
 }
 
 export  function PartnerSignup() {
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const businessEmail = e.target.email.value
@@ -105,8 +111,9 @@ export  function PartnerSignup() {
     const location = e.target.location.value
     const contactNumber = e.target.contactNumber.value
 
-    const response = await axios.post('http://localhost:3000/auth/food-partner/signup', { businessEmail, password, businessName, location, contactNumber })
+    const response = await axios.post('http://localhost:3000/auth/food-partner/signup', { businessEmail, password, businessName, location, contactNumber },{withCredentials: true})
     console.log(response.data);
+    navigate('/');
     
   }
 
@@ -131,12 +138,14 @@ export  function PartnerSignup() {
 }
 
 export function PartnerSignin() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const businessEmail = e.target.email.value
     const password = e.target.password.value
-
-    axios.post('http://localhost:3000/auth/food-partner/signin', { businessEmail, password })
+    const response = await axios.post('http://localhost:3000/auth/food-partner/signin', { businessEmail, password },{withCredentials: true})
+    console.log(response.data);
+    navigate('/');
   }
   return (
     <AuthPage
@@ -145,6 +154,7 @@ export function PartnerSignin() {
       buttonLabel="Partner Sign In"
       linkText="Need a partner account? "
       linkTo="/food-partner/signup"
+      submitHandler={handleSubmit}
       switchLink={{ text: 'Visiting as a hungry customer?', label: 'User Sign In', to: '/user/signin' }}
       fields={[
         { name: 'email', label: 'Business Email', type: 'email', placeholder: 'business@example.com' },
