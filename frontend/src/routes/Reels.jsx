@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from './homeElements/FooterArea';
+import Navbar from './homeElements/Navbar';
 
 const Reels = () => {
     const navigate = useNavigate();
@@ -16,13 +18,15 @@ const Reels = () => {
             }
         }
         fetchVideos()
-    },[videos.length])
+    },[]) // Fixed: was [videos.length] which caused infinite re-fetches
 
     // const [currentVideo, setCurrentVideo] = useState(0);
     const videoRefs = useRef([]);
     const restartTimeouts = useRef(new Map());
 
     useEffect(() => {
+        if (videos.length === 0) return; // Don't set up observer until videos are loaded
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -64,13 +68,15 @@ const Reels = () => {
             });
             restartTimeouts.current.clear();
         };
-    }, []);
+    }, [videos.length]); // Re-run when videos are loaded
 
     const handleHomeClick = () => {
         navigate('/');
     };
 
     return (
+        <>
+        <Navbar />
         <div style={{ height: '100vh', overflowY: 'scroll', scrollSnapType: 'y mandatory' }}>
             {videos.map((video, index) => (
                 <div key={video._id} style={{ height: '100vh', position: 'relative', scrollSnapAlign: 'start' }}>
@@ -90,13 +96,14 @@ const Reels = () => {
                         textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
                     }}>
                         <h3>{video.itemName}</h3>
+                        <h3>{video.description}</h3>
                     </div>
                     <button
                         onClick={handleHomeClick}
                         style={{
                             position: 'absolute',
-                            top: '20px',
-                            right: '20px',
+                            bottom: '20px',
+                            left: '20px',
                             padding: '10px 20px',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             border: 'none',
@@ -105,11 +112,14 @@ const Reels = () => {
                             fontSize: '16px'
                         }}
                     >
-                        Home
+                        Buy
                     </button>
                 </div>
             ))}
         </div>
+        <Footer />
+        </>
+
     );
 };
 

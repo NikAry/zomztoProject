@@ -1,16 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Navbar from './homeElements/Navbar'
+import BodyHome from './homeElements/BodyHome'
+import Footer from './homeElements/FooterArea'
+import './homeElements/HomeLayout.css'
 
 export default function Home() {
-    return(
-        <div>
-            <h1>Welcome to Zomzto!</h1>
-            <p>Your one-stop destination for delicious meals from nearby kitchens.</p>
-            <Link to="/reels">
-                <button style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
-                    Watch Food Reels
-                </button>
-            </Link>
+    return (
+        <div className="home-shell">
+            <Navbar />
+            <BodyHome />
+            <Footer />
         </div>
     )
-}   
+}
