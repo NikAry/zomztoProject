@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from './homeElements/FooterArea';
 import Navbar from './homeElements/Navbar';
+import FooterArea from './homeElements/FooterArea';
+import { BadgePlus, Dot, HeartPlus, Star} from 'lucide-react';
 
 const Reels = () => {
     const navigate = useNavigate();
@@ -76,10 +77,10 @@ const Reels = () => {
 
     return (
         <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div style={{ height: '100vh', overflowY: 'scroll', scrollSnapType: 'y mandatory' }}>
             {videos.map((video, index) => (
-                <div key={video._id} style={{ height: '100vh', position: 'relative', scrollSnapAlign: 'start' }}>
+                <div key={video._id} style={{ height: '100vh', position: 'relative', top: '1px', scrollSnapAlign: 'start' }}>
                     <video
                         ref={(el) => (videoRefs.current[index] = el)}
                         src={video.video}
@@ -88,22 +89,56 @@ const Reels = () => {
                         muted
                         playsInline
                     />
-                    <div style={{
+                    <div className="option" style={{
                         position: 'absolute',
-                        bottom: '20px',
-                        left: '20px',
+                        top: '25rem',
+                        textAlign: 'right',
+                        right: '0.5rem',
                         color: 'white',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                        alignItems:'center',
+                        gap: '1rem',
+                        border: '1px solid rgba(255,255,255,0.8)',
+                        width: '3rem',
+                        height:'11rem',
                         textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
                     }}>
-                        <h3>{video.itemName}</h3>
-                        <h3>{video.description}</h3>
+                        <Star size={34} color="yellow"  />
+                        <HeartPlus size={34} color="#ffffff" />
+                        <BadgePlus size={34} color="#ffffff" />
+                    </div>
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '4rem',
+                        left: '1rem',
+                        color: 'white',
+                        display: 'flex',
+                        // alignItems:'space-evenly',
+                        flexDirection:'column',
+                        gap: '0.3rem',
+                        border: '1px solid rgba(255,255,255,0.8)',
+                        width: '12rem',
+                        height:'11rem',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                    }}>
+                        <div className='profileDetail'>
+                            <div className="dp">pic</div>
+                            <div className="namePartner">Partner Name</div>
+                        </div>
+                        <div className="contentInfo">
+                            <h3>{video.itemName}</h3>
+                            <h3>{video.description}</h3>
+                        </div>
+                        
                     </div>
                     <button
                         onClick={handleHomeClick}
                         style={{
                             position: 'absolute',
-                            bottom: '20px',
-                            left: '20px',
+                            bottom: '50px',
+                            right: '20px',
                             padding: '10px 20px',
                             backgroundColor: 'rgba(255,255,255,0.8)',
                             border: 'none',
@@ -117,7 +152,7 @@ const Reels = () => {
                 </div>
             ))}
         </div>
-        <Footer />
+        <FooterArea />
         </>
 
     );

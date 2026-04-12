@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 function BodyHome() {
     return (
-        <main className="home-main">
+        <main className="home-main relative">
             <section className="home-hero">
                 <h2>Offers and discounts</h2>
                 <p>Explore curated meals, partner offers, and local deals in one beautiful place.</p>
