@@ -2,7 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser')
 const authRouter = require('./routers/authRoutes');
 const foodRouter = require('./routers/foodRoutes');
-const cors = require('cors')
+const cors = require('cors');
+const { profileRouter } = require('./routers/profileRoutes');
 const app = express();
 
 app.use(cors({origin: "http://localhost:5173", credentials: true}))
@@ -15,4 +16,5 @@ app.get('/',(req,res)=> {
 })
 app.use('/auth',authRouter)
 app.use('/food',foodRouter)
+app.use('/view',profileRouter)
 module.exports = app

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import Navbar from './homeElements/Navbar';
 import FooterArea from './homeElements/FooterArea';
 import { BadgePlus, Dot, HeartPlus, Star} from 'lucide-react';
@@ -125,7 +125,7 @@ const Reels = () => {
                     }}>
                         <div className='profileDetail'>
                             <div className="dp">pic</div>
-                            <div className="namePartner">Partner Name</div>
+                            <Link className="namePartner" to={`/view/food-partner/${video.foodPartner}`}>Partner Name</Link>
                         </div>
                         <div className="contentInfo">
                             <h3>{video.itemName}</h3>
