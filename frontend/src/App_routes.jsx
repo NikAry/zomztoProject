@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { UserSignup, UserSignin, PartnerSignup, PartnerSignin } from './routes/AuthPage'
 import Home from './routes/home'
 import Reels from './routes/Reels'
-import FPprofile from './routes/FP-profile'
+import {FPprofile,UserProfile} from './routes/profileHandlers'
 
 const App_routes = () => {
     return(
@@ -16,6 +16,7 @@ const App_routes = () => {
                 <Route path="/food-partner/signup" element={<PartnerSignup />} />
                 <Route path="/food-partner/signin" element={<PartnerSignin />} />
                 <Route path="/view/food-partner/:id" element={<FPprofile />} />
+                <Route path="/view/user/profile" element={<UserProfile />} />
                 <Route path="*" element={<Navigate to="/user/signin" replace />} />
             </Routes>
         </Router>

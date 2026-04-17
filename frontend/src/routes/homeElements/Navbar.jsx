@@ -1,12 +1,12 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom'
 function Navbar() {
     return (
         <header className="home-navbar">
             <div className="home-brand">Zomzto</div>
-            <button type="button" className="home-account" aria-label="Account section">
-                
-            </button>
+            <Link className='profileData' to={'/view/user/profile'}>
+                AP
+            </Link>
         </header>
     );
 }

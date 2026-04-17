@@ -51,7 +51,8 @@ const signIn = async (req,res)=>{
     }
     const payload = {
         id: user._id,
-        email: user.email
+        email: user.email,
+        fullName: user.fullName
     }
     const token = jwt.sign(payload,process.env.secretKey)
     res.cookie('token',token)
