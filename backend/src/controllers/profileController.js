@@ -12,7 +12,7 @@ const FoodPartnerId = async(req,res)=>{
     })
 }
 
-const userProfile = async (req,res) => {
+const   userProfile = async (req,res) => {
 
   const user = req.user
   // console.log('user profile',user)

@@ -42,7 +42,7 @@ function AuthPage({ title, subtitle, buttonLabel, fields, linkText, linkTo, swit
   );
 }
 
-export function UserSignup() {
+export function UserSignup({ setUser }) {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +53,16 @@ export function UserSignup() {
 
     const response = await axios.post('http://localhost:3000/auth/user/signup', { email, phoneNumber, fullName, password },{withCredentials: true})
     console.log(response.data);
+
+    if (setUser) {
+      try {
+        const profileResponse = await axios.get('http://localhost:3000/view/user/profile', { withCredentials: true })
+        setUser(profileResponse.data.user || null)
+      } catch (error) {
+        console.error('Unable to load user profile after signup', error)
+      }
+    }
+
     navigate('/');
   }
   return (
@@ -74,7 +84,7 @@ export function UserSignup() {
   );
 }
 
-export function UserSignin() {
+export function UserSignin({ setUser }) {
   const navigate = useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -82,6 +92,16 @@ export function UserSignin() {
     const password = e.target.password.value
     const response = await axios.post('http://localhost:3000/auth/user/signin', { email, password },{withCredentials: true})
     console.log(response.data);
+
+    if (setUser) {
+      try {
+        const profileResponse = await axios.get('http://localhost:3000/view/user/profile', { withCredentials: true })
+        setUser(profileResponse.data.user || null)
+      } catch (error) {
+        console.error('Unable to load user profile after signin', error)
+      }
+    }
+
     navigate('/');
   }
   return (
@@ -101,7 +121,7 @@ export function UserSignin() {
   );
 }
 
-export  function PartnerSignup() {
+export function PartnerSignup({ setUser }) {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,6 +133,16 @@ export  function PartnerSignup() {
 
     const response = await axios.post('http://localhost:3000/auth/food-partner/signup', { businessEmail, password, businessName, location, contactNumber },{withCredentials: true})
     console.log(response.data);
+
+    if (setUser) {
+      try {
+        const profileResponse = await axios.get('http://localhost:3000/view/user/profile', { withCredentials: true })
+        setUser(profileResponse.data.user || null)
+      } catch (error) {
+        console.error('Unable to load user profile after partner signup', error)
+      }
+    }
+
     navigate('/');
     
   }
@@ -137,7 +167,7 @@ export  function PartnerSignup() {
   );
 }
 
-export function PartnerSignin() {
+export function PartnerSignin({ setUser }) {
   const navigate = useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -145,6 +175,16 @@ export function PartnerSignin() {
     const password = e.target.password.value
     const response = await axios.post('http://localhost:3000/auth/food-partner/signin', { businessEmail, password },{withCredentials: true})
     console.log(response.data);
+
+    if (setUser) {
+      try {
+        const profileResponse = await axios.get('http://localhost:3000/view/user/profile', { withCredentials: true })
+        setUser(profileResponse.data.user || null)
+      } catch (error) {
+        console.error('Unable to load user profile after partner signin', error)
+      }
+    }
+
     navigate('/');
   }
   return (

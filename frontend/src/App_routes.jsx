@@ -1,22 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import axios from 'axios'
 import { UserSignup, UserSignin, PartnerSignup, PartnerSignin } from './routes/AuthPage'
 import Home from './routes/home'
 import Reels from './routes/Reels'
-import {FPprofile,UserProfile} from './routes/profileHandlers'
+import { FPprofile, UserProfile } from './routes/profileHandlers'
+import getCookie from './routes/cookieExtractor'
 
 const App_routes = () => {
-    return(
+    const [user, setUser] = useState(null)
+    const token = getCookie('token')
+
+    useEffect(() => {
+        if (!token) {
+            setUser(null)
+            return
+        }
+
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/view/user/profile', {
+                    withCredentials: true,
+                })
+                setUser(response.data.user || null)
+            } catch (error) {
+                console.error('Failed to load current user profile', error)
+                setUser(null)
+            }
+        }
+
+        fetchUser()
+    }, [token])
+
+    return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home user={user} />} />
                 <Route path="/reels" element={<Reels />} />
-                <Route path="/user/signup" element={<UserSignup />} />
-                <Route path="/user/signin" element={<UserSignin />} />
+                <Route path="/user/signup" element={<UserSignup setUser={setUser} />} />
+                <Route path="/user/signin" element={<UserSignin setUser={setUser} />} />
                 <Route path="/food-partner/signup" element={<PartnerSignup />} />
                 <Route path="/food-partner/signin" element={<PartnerSignin />} />
                 <Route path="/view/food-partner/:id" element={<FPprofile />} />
-                <Route path="/view/user/profile" element={<UserProfile />} />
+                <Route path="/view/user/profile" element={<UserProfile token={token} />} />
                 <Route path="*" element={<Navigate to="/user/signin" replace />} />
             </Routes>
         </Router>
