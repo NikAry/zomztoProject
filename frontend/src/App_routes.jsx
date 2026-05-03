@@ -4,7 +4,8 @@ import axios from 'axios'
 import { UserSignup, UserSignin, PartnerSignup, PartnerSignin } from './routes/AuthPage'
 import Home from './routes/home'
 import Reels from './routes/Reels'
-import { FPprofile, UserProfile } from './routes/profileHandlers'
+import Cart from './routes/Cart'
+import { FPid, UserProfile } from './routes/profileHandlers'
 import getCookie from './routes/cookieExtractor'
 
 const App_routes = () => {
@@ -41,8 +42,9 @@ const App_routes = () => {
                 <Route path="/user/signin" element={<UserSignin setUser={setUser} />} />
                 <Route path="/food-partner/signup" element={<PartnerSignup />} />
                 <Route path="/food-partner/signin" element={<PartnerSignin />} />
-                <Route path="/view/food-partner/:id" element={<FPprofile />} />
+                <Route path="/view/food-partner/:id" element={<FPid token={token} user={user} />} />
                 <Route path="/view/user/profile" element={<UserProfile token={token} />} />
+                <Route path="/cart" element={<Cart user={user} />} />
                 <Route path="*" element={<Navigate to="/user/signin" replace />} />
             </Routes>
         </Router>

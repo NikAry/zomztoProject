@@ -1,7 +1,7 @@
 import React from 'react';
 import './AuthPage.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function AuthPage({ title, subtitle, buttonLabel, fields, linkText, linkTo, switchLink, submitHandler }) {
   return (
@@ -44,6 +44,7 @@ function AuthPage({ title, subtitle, buttonLabel, fields, linkText, linkTo, swit
 
 export function UserSignup({ setUser }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value
@@ -63,7 +64,8 @@ export function UserSignup({ setUser }) {
       }
     }
 
-    navigate('/');
+    const redirectTo = location.state?.redirectTo || '/';
+    navigate(redirectTo);
   }
   return (
     <AuthPage
@@ -86,6 +88,7 @@ export function UserSignup({ setUser }) {
 
 export function UserSignin({ setUser }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const handleSubmit = async(e) => {
     e.preventDefault();
     const email = e.target.email.value
@@ -102,7 +105,8 @@ export function UserSignin({ setUser }) {
       }
     }
 
-    navigate('/');
+    const redirectTo = location.state?.redirectTo || '/';
+    navigate(redirectTo);
   }
   return (
     <AuthPage
@@ -123,6 +127,7 @@ export function UserSignin({ setUser }) {
 
 export function PartnerSignup({ setUser }) {
   const navigate = useNavigate();
+  const locationHook = useLocation();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const businessEmail = e.target.email.value
@@ -143,7 +148,8 @@ export function PartnerSignup({ setUser }) {
       }
     }
 
-    navigate('/');
+    const redirectTo = locationHook.state?.redirectTo || '/';
+    navigate(redirectTo);
     
   }
 
@@ -169,6 +175,7 @@ export function PartnerSignup({ setUser }) {
 
 export function PartnerSignin({ setUser }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const handleSubmit = async(e) => {
     e.preventDefault();
     const businessEmail = e.target.email.value
@@ -185,7 +192,8 @@ export function PartnerSignin({ setUser }) {
       }
     }
 
-    navigate('/');
+    const redirectTo = location.state?.redirectTo || '/';
+    navigate(redirectTo);
   }
   return (
     <AuthPage
